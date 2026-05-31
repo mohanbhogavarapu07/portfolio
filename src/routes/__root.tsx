@@ -73,11 +73,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "theme-color", content: "#0a0f1f" },
-      { title: "Aditya — Full Stack Developer & AI Engineer" },
+      { title: "Mohan — Full Stack Developer & AI Engineer" },
       {
         name: "description",
         content:
-          "Portfolio of Aditya — Full Stack Developer, AI Engineer and Product Builder shipping production AI systems and end-to-end products.",
+          "Portfolio of Mohan — Full Stack Developer, AI Engineer and Product Builder shipping production AI systems and end-to-end products.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

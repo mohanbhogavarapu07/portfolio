@@ -1,254 +1,130 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { ArrowRight, Download, Sparkles } from "lucide-react";
-
-const techBadges = [
-  { label: "React", x: "8%", y: "22%", delay: 0 },
-  { label: "TypeScript", x: "84%", y: "18%", delay: 0.2 },
-  { label: "Python", x: "12%", y: "72%", delay: 0.4 },
-  { label: "LangChain", x: "82%", y: "68%", delay: 0.6 },
-  { label: "Node.js", x: "92%", y: "44%", delay: 0.8 },
-  { label: "OpenAI", x: "4%", y: "48%", delay: 1.0 },
-  { label: "AWS", x: "72%", y: "86%", delay: 1.2 },
-  { label: "PostgreSQL", x: "22%", y: "88%", delay: 1.4 },
-];
+import { motion } from "motion/react";
 
 const codeLines = [
-  { t: "// agent.ts", c: "text-muted-foreground" },
-  { t: "const agent = createAgent({", c: "" },
-  { t: "  model: 'gpt-4o',", c: "" },
-  { t: "  tools: [search, code, plan],", c: "" },
-  { t: "  memory: vectorStore,", c: "" },
-  { t: "});", c: "" },
-  { t: "", c: "" },
-  { t: "await agent.run(task);", c: "text-electric" },
+  { t: "// about.ts", c: "text-muted-foreground font-mono" },
+  { t: "Full Stack Developer who turns ideas into real, working products end-to-end.", c: "" },
+  { t: "I approach problems by understanding the whole system, breaking them down, and", c: "" },
+  { t: "delivering solutions that actually work in real-world conditions. I focus on", c: "" },
+  { t: "ownership, clarity, and execution, so what gets built is reliable, usable, and", c: "" },
+  { t: "ready to scale. I work hands-on with data, structuring it, validating it, and", c: "" },
+  { t: "using it to drive accurate results and meaningful outputs. I also ensure that", c: "" },
+  { t: "applications are properly built, tested, and released, with smooth deployment", c: "" },
+  { t: "and stable performance, so systems run consistently as they grow.", c: "" },
 ];
 
-function Particles() {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = ref.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.4,
+    },
+  },
+};
 
-    let raf = 0;
-    let w = (canvas.width = canvas.offsetWidth * devicePixelRatio);
-    let h = (canvas.height = canvas.offsetHeight * devicePixelRatio);
-    const dots = Array.from({ length: 70 }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25,
-      r: Math.random() * 1.6 + 0.4,
-    }));
-
-    const resize = () => {
-      w = canvas.width = canvas.offsetWidth * devicePixelRatio;
-      h = canvas.height = canvas.offsetHeight * devicePixelRatio;
-    };
-    window.addEventListener("resize", resize);
-
-    const tick = () => {
-      ctx.clearRect(0, 0, w, h);
-      for (const d of dots) {
-        d.x += d.vx;
-        d.y += d.vy;
-        if (d.x < 0 || d.x > w) d.vx *= -1;
-        if (d.y < 0 || d.y > h) d.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r * devicePixelRatio, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(120, 170, 255, 0.5)";
-        ctx.fill();
-      }
-      // lines
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x;
-          const dy = dots[i].y - dots[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const max = 140 * devicePixelRatio;
-          if (dist < max) {
-            ctx.strokeStyle = `rgba(120, 170, 255, ${0.18 * (1 - dist / max)})`;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-  return <canvas ref={ref} className="absolute inset-0 size-full" aria-hidden />;
-}
+const lineVariants = {
+  hidden: { opacity: 0, x: -8 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const,
+    },
+  },
+};
 
 export function Hero() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 60, damping: 20 });
-  const sy = useSpring(my, { stiffness: 60, damping: 20 });
-  const glowX = useTransform(sx, (v) => `${50 + v * 8}%`);
-  const glowY = useTransform(sy, (v) => `${30 + v * 6}%`);
-
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      const rect = heroRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      mx.set(((e.clientX - rect.left) / rect.width - 0.5) * 2);
-      my.set(((e.clientY - rect.top) / rect.height - 0.5) * 2);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [mx, my]);
-
-  const [typed, setTyped] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setTyped((t) => (t + 1) % (codeLines.length + 8)), 380);
-    return () => clearInterval(id);
-  }, []);
-
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-screen w-full overflow-hidden bg-background"
-      id="hero"
-    >
-      <div className="absolute inset-0 bg-grid mask-fade-b" />
-      <Particles />
-      <motion.div
-        className="pointer-events-none absolute size-[800px] rounded-full blur-3xl"
-        style={{
-          left: glowX,
-          top: glowY,
-          translateX: "-50%",
-          translateY: "-50%",
-          background:
-            "radial-gradient(circle, oklch(0.72 0.19 240 / 0.35), transparent 60%)",
-        }}
-      />
+    <section className="relative flex min-h-screen w-full flex-col justify-center px-6 pt-28 pb-16 bg-background" id="hero">
+      {/* Decorative top gradient */}
+      <div className="absolute inset-x-0 top-0 h-[40vh] bg-gradient-hero pointer-events-none" />
 
-      {/* floating tech badges */}
-      {techBadges.map((b) => (
-        <motion.div
-          key={b.label}
-          className="absolute hidden md:block"
-          style={{ left: b.x, top: b.y }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 + b.delay, duration: 0.8 }}
-        >
-          <div className="glass animate-float rounded-full px-4 py-1.5 text-xs font-medium text-foreground/80"
-               style={{ animationDelay: `${b.delay}s` }}>
-            {b.label}
-          </div>
-        </motion.div>
-      ))}
-
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-24 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="glass mb-8 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium text-muted-foreground"
-        >
-          <span className="relative flex size-2">
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-electric opacity-75" />
-            <span className="relative inline-flex size-2 rounded-full bg-electric" />
-          </span>
-          Available for new product & AI engineering work
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-7xl md:text-8xl"
-        >
-          <span className="text-gradient">Aditya</span>
-          <br />
-          <span className="text-foreground">Builds <span className="text-gradient-electric">AI Systems.</span></span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25 }}
-          className="mt-6 max-w-2xl text-base text-muted-foreground sm:text-lg"
-        >
-          Full Stack Developer <span className="text-foreground/60">·</span> AI Engineer{" "}
-          <span className="text-foreground/60">·</span> Product Builder.
-          Shipping production systems where humans and agents work together.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-3"
-        >
-          <a
-            href="#projects"
-            className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-electric px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-all hover:scale-[1.02] hover:brightness-110"
-          >
-            <Sparkles className="size-4" />
-            Explore My Work
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
-          <a
-            href="#contact"
-            className="glass inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-white/5"
-          >
-            <Download className="size-4" />
-            Download Resume
-          </a>
-        </motion.div>
-
-        {/* Animated code snippet */}
+      {/* Main card container */}
+      <div className="mx-auto w-full max-w-7xl xl:max-w-[84rem] 2xl:max-w-[88rem]">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.6 }}
-          className="glass-strong mt-16 w-full max-w-xl overflow-hidden rounded-2xl text-left shadow-elevated"
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative w-full overflow-hidden rounded-[2.5rem] border border-border bg-[#0B0B0C] p-8 md:p-12 lg:p-16 shadow-elevated flex flex-col justify-between min-h-[500px] lg:min-h-[640px]"
         >
-          <div className="flex items-center gap-2 border-b border-white/5 px-4 py-2.5">
-            <span className="size-2.5 rounded-full bg-red-400/70" />
-            <span className="size-2.5 rounded-full bg-yellow-400/70" />
-            <span className="size-2.5 rounded-full bg-green-400/70" />
-            <span className="ml-3 font-mono text-[11px] text-muted-foreground">agent.ts</span>
+          {/* Header Metadata */}
+          <div className="flex justify-between items-start w-full border-b border-border/30 pb-6 mb-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+            <div className="flex flex-col gap-1">
+              <span className="text-electric">[ Portfolio]</span>
+              <span>© 2026</span>
+            </div>
+            <div className="text-right">
+              <span>Developer — Andhra Pradesh, IN</span>
+            </div>
           </div>
-          <pre className="overflow-hidden p-5 font-mono text-[13px] leading-relaxed text-foreground/80">
-            {codeLines.map((l, i) => (
-              <div
-                key={i}
-                className={`transition-all duration-500 ${i <= typed ? "opacity-100" : "opacity-30"} ${l.c}`}
+
+          {/* Central Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.55fr] gap-8 lg:gap-12 items-center my-auto w-full">
+            {/* Left Column: Bold Presentation & Bio */}
+            <div className="flex flex-col items-start gap-8">
+              <motion.h1
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.9, delay: 0.2 }}
+                className="font-display text-[10vw] sm:text-[8vw] lg:text-[4vw] xl:text-[4.4vw] font-extrabold uppercase leading-[0.85] tracking-[-0.03em] text-[#E5E5E7]"
               >
-                <span className="mr-4 inline-block w-4 select-none text-right text-muted-foreground/40">
-                  {i + 1}
+                MOHAN
+                <br />
+                <span className="text-muted-foreground/30 text-[8vw] sm:text-[6.5vw] lg:text-[3.4vw] xl:text-[3.6vw]">BUILDS</span>
+              </motion.h1>
+
+              <div className="flex flex-col gap-4">
+                <span className="font-mono text-[10.5px] sm:text-[11px] font-bold uppercase tracking-[0.3em] text-electric">
+                  [ Full Stack & AI Explorer ]
                 </span>
-                {l.t || "\u00A0"}
+                
+                
               </div>
-            ))}
-          </pre>
+
+              {/* Action pill link */}
+              <a
+                href="#contact"
+                className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-white/10 bg-[#0c0c0d] px-6 py-3.5 font-sans text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.2em] text-foreground transition-all hover:border-electric hover:bg-[#121213]"
+              >
+                Let's Connect
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric opacity-75"></span>
+                  <span className="relative inline-flex size-1.5 rounded-full bg-electric"></span>
+                </span>
+              </a>
+            </div>
+
+            {/* Right Column: Code Snippet Panel directly inside */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="w-full overflow-hidden rounded-2xl border border-border bg-[#070708] text-left shadow-lg"
+            >
+              <div className="flex items-center gap-2 border-b border-border/60 px-5 py-3.5 bg-black/30">
+                <span className="size-2 rounded-full bg-electric/50" />
+                <span className="size-2 rounded-full bg-white/5" />
+                <span className="size-2 rounded-full bg-white/5" />
+                <span className="ml-3 font-mono text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider text-muted-foreground">about.ts</span>
+              </div>
+              <pre className="whitespace-pre-wrap break-words p-6 font-mono text-[11.5px] sm:text-[12.5px] xl:text-[13px] leading-relaxed text-foreground/75 max-h-[400px] overflow-y-auto">
+                <motion.div variants={containerVariants} initial="hidden" animate="visible">
+                  {codeLines.map((l, i) => (
+                    <motion.div key={i} variants={lineVariants} className={l.c}>
+                      <span className="mr-6 inline-block w-5 select-none text-right text-muted-foreground/25 font-bold">
+                        {i + 1}
+                      </span>
+                      {l.t || "\u00A0"}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </pre>
+            </motion.div>
+          </div>
         </motion.div>
       </div>
-
-      {/* scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
-      >
-        scroll
-      </motion.div>
     </section>
   );
 }

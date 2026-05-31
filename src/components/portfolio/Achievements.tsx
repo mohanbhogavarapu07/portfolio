@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "motion/react";
-import { SectionHeader } from "./Story";
+import { SectionHeader } from "./SectionHeader";
 
 const stats = [
   { value: 3, suffix: "+", label: "Internships completed" },
@@ -37,27 +37,32 @@ function Counter({ target, suffix }: { target: number; suffix: string }) {
 
 export function Achievements() {
   return (
-    <section id="achievements" className="relative py-32">
+    <section id="achievements" className="relative pt-20 pb-20 border-b border-border/50 bg-background">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeader
           eyebrow="Achievement Wall"
-          title={<>Numbers that <span className="text-gradient-electric">compound.</span></>}
+          title={
+            <>
+              Numbers that <span className="text-electric">compound.</span>
+            </>
+          }
         />
-        <div className="mt-16 grid grid-cols-2 gap-5 md:grid-cols-4">
+        <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-4">
           {stats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.07 }}
-              className="glass-strong relative overflow-hidden rounded-2xl p-6"
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              className="relative overflow-hidden rounded-2xl border border-border bg-[#0B0B0C] p-8 hover:border-white/20 transition-all duration-300"
             >
-              <div className="absolute -right-6 -top-6 size-24 rounded-full bg-electric/20 blur-2xl" />
-              <div className="font-display text-5xl font-semibold tracking-tight text-gradient">
+              <div className="font-display text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl">
                 <Counter target={s.value} suffix={s.suffix} />
               </div>
-              <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
+              <div className="mt-4 border-t border-border/30 pt-4 font-mono text-[9px] font-bold uppercase tracking-wider text-muted-foreground">
+                {s.label}
+              </div>
             </motion.div>
           ))}
         </div>
