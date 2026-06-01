@@ -11,7 +11,7 @@
     "preview": "npm run build && wrangler dev",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "npm run build && wrangler pages deploy dist",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
