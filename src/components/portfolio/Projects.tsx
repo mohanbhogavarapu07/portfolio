@@ -152,7 +152,7 @@ export function Projects() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 30, scale: 0.98 }}
               transition={{ type: "spring", stiffness: 320, damping: 26 }}
-              className="relative w-full max-w-5xl rounded-[2.5rem] border border-border bg-[#0B0B0C] p-6 md:p-10 lg:p-12 overflow-y-auto max-h-[90vh] shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col justify-between"
+              className="relative w-full max-w-5xl rounded-[2rem] md:rounded-[2.5rem] border border-border bg-[#0B0B0C] p-6 md:p-10 lg:p-12 overflow-y-auto max-h-[85vh] md:max-h-[90vh] shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col justify-between"
               onClick={(e) => e.stopPropagation()} // Prevent closing on clicking inside modal
             >
               {/* Floating Close Button */}

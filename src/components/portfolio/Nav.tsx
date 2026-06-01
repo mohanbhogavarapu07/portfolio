@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { id: "experience", label: "Experience" },
@@ -11,6 +12,7 @@ const links = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     onScroll();
@@ -47,17 +49,61 @@ export function Nav() {
           ))}
         </nav>
 
-        <a
-          href="#contact"
-          className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-border px-5 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-foreground transition-all hover:bg-white/5"
-        >
-          Let's Connect
-          <span className="relative flex size-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric opacity-75"></span>
-            <span className="relative inline-flex size-1.5 rounded-full bg-electric"></span>
-          </span>
-        </a>
+        <div className="flex items-center gap-4">
+          <a
+            href="#contact"
+            className="hidden sm:inline-flex group relative items-center gap-2 overflow-hidden rounded-full border border-border px-5 py-2 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-foreground transition-all hover:bg-white/5"
+          >
+            Let's Connect
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric opacity-75"></span>
+              <span className="relative inline-flex size-1.5 rounded-full bg-electric"></span>
+            </span>
+          </a>
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-foreground focus:outline-none"
+          >
+            {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+          </button>
+        </div>
       </div>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="md:hidden overflow-hidden border-b border-border bg-background/95 backdrop-blur-md"
+          >
+            <nav className="flex flex-col px-6 py-4 gap-4">
+              {links.map((l) => (
+                <a
+                  key={l.id}
+                  href={`#${l.id}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-sans text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground transition-colors hover:text-electric"
+                >
+                  {l.label}
+                </a>
+              ))}
+              <a
+                href="#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2 inline-flex sm:hidden items-center justify-center gap-2 overflow-hidden rounded-full border border-border px-5 py-3 font-sans text-[10px] font-bold uppercase tracking-[0.18em] text-foreground transition-all hover:bg-white/5"
+              >
+                Let's Connect
+                <span className="relative flex size-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-electric opacity-75"></span>
+                  <span className="relative inline-flex size-1.5 rounded-full bg-electric"></span>
+                </span>
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

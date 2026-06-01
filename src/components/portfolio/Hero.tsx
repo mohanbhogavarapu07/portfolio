@@ -47,7 +47,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full overflow-hidden rounded-[2.5rem] border border-border bg-[#0B0B0C] p-8 md:p-12 lg:p-16 shadow-elevated flex flex-col justify-between min-h-[500px] lg:min-h-[640px]"
+          className="relative w-full overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-border bg-[#0B0B0C] p-6 sm:p-8 md:p-12 lg:p-16 shadow-elevated flex flex-col justify-between min-h-[500px] lg:min-h-[640px]"
         >
           {/* Header Metadata */}
           <div className="flex justify-between items-start w-full border-b border-border/30 pb-6 mb-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
