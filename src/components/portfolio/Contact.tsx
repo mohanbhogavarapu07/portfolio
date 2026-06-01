@@ -32,7 +32,7 @@ export function Contact() {
               />
               <ContactLink icon={Linkedin} label="LinkedIn" value="/in/mohan-bhogavarapu" href="https://www.linkedin.com/in/mohan-bhogavarapu/" />
               <ContactLink icon={Github} label="GitHub" value="@mohanbhogavarapu07" href="https://github.com/mohanbhogavarapu07" />
-              <ContactLink icon={Download} label="Resume" value="View Resume" href="https://drive.google.com/file/d/1rCupIIghNtsg4tcoAycGbUrjeKfIJwfm/view?usp=sharing" primary />
+              <ContactLink icon={Download} label="Resume" value="View Resume" href={`${import.meta.env.BASE_URL}MOHAN_BHOGAVARAPU_RESUME_Latest.pdf`} primary />
             </div>
           </div>
         </motion.div>
