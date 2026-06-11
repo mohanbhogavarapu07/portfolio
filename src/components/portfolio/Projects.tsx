@@ -98,7 +98,7 @@ export function Projects() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, delay: idx * 0.05 }}
               onClick={() => setSelectedProject(p)}
-              className="group relative overflow-hidden rounded-[2.5rem] border border-border bg-[#070708] p-8 md:p-10 cursor-pointer select-none transition-all duration-300 flex flex-col justify-between min-h-[280px] hover:border-white/20 hover:bg-[#0B0B0C]"
+              className="group relative overflow-hidden rounded-[2.5rem] border border-border bg-[#070708] p-6 sm:p-8 md:p-10 cursor-pointer select-none transition-all duration-300 flex flex-col justify-between min-h-[280px] hover:border-white/20 hover:bg-[#0B0B0C]"
             >
               {/* Background grid accent detail inside cards */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.005)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.005)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] pointer-events-none opacity-60" />
@@ -115,20 +115,20 @@ export function Projects() {
                 </div>
 
                 {/* Big Title */}
-                <h3 className="mt-6 font-display text-3xl md:text-[2.2rem] font-extrabold uppercase tracking-wide text-foreground leading-none">
+                <h3 className="mt-6 font-display text-[clamp(1.2rem,5vw,1.875rem)] sm:text-3xl md:text-[2.2rem] font-extrabold uppercase tracking-wide text-foreground leading-none break-words">
                   {p.name}
                 </h3>
 
                 {/* Brief Summary */}
-                <p className="mt-4 text-xs leading-relaxed text-muted-foreground font-sans max-w-lg">
+                <p className="mt-4 text-xs leading-relaxed text-muted-foreground font-sans max-w-lg text-justify hyphens-auto">
                   {p.brief}
                 </p>
               </div>
 
               {/* Read link trigger */}
-              <div className="flex items-center justify-between font-mono text-[9px] font-bold text-muted-foreground/30 mt-6 pt-4 border-t border-border/10">
-                <span>SYS // {p.name.toUpperCase().replace(/ /g, "_")}</span>
-                <span className="text-muted-foreground/40 group-hover:text-electric transition-colors duration-300 tracking-[0.15em] uppercase">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 font-mono text-[9px] font-bold text-muted-foreground/30 mt-6 pt-4 border-t border-border/10">
+                <span className="truncate max-w-full">SYS // {p.name.toUpperCase().replace(/ /g, "_")}</span>
+                <span className="text-muted-foreground/40 group-hover:text-electric transition-colors duration-300 tracking-[0.15em] uppercase self-end sm:self-auto shrink-0">
                   READ CASE STUDY [ → ]
                 </span>
               </div>
@@ -163,9 +163,9 @@ export function Projects() {
                 <X className="size-4 group-hover/btn:rotate-90 transition-transform duration-300" />
               </button>
 
-              <div className="z-10">
+              <div className="z-10 pr-12 md:pr-16">
                 {/* Header Tag and Index */}
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2">
                   <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-electric">
                     Case Study Detail
                   </span>
@@ -175,7 +175,7 @@ export function Projects() {
                 </div>
 
                 {/* Case Study Title */}
-                <h3 className="mt-2 font-display text-2xl font-extrabold tracking-wide text-foreground uppercase sm:text-3xl">
+                <h3 className="mt-2 font-display text-2xl sm:text-3xl font-extrabold tracking-wide text-foreground uppercase break-words">
                   {selectedProject.name}
                 </h3>
 
@@ -191,7 +191,7 @@ export function Projects() {
                         {selectedProject.results.map((r) => (
                           <li key={r} className="flex items-start gap-3 text-sm sm:text-base leading-relaxed text-foreground/90 font-medium">
                             <span className="mt-2 size-1.5 shrink-0 rounded-sm bg-electric" />
-                            <span>{r}</span>
+                            <span className="text-justify hyphens-auto">{r}</span>
                           </li>
                         ))}
                       </ul>
@@ -259,7 +259,7 @@ function Block({ label, body }: { label: string; body: string }) {
   return (
     <div>
       <Label>{label}</Label>
-      <p className="mt-2 text-foreground/90 leading-relaxed text-sm sm:text-base font-medium">{body}</p>
+      <p className="mt-2 text-foreground/90 leading-relaxed text-sm sm:text-base font-medium text-justify hyphens-auto">{body}</p>
     </div>
   );
 }

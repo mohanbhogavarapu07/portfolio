@@ -119,6 +119,10 @@
     background: var(--color-background);
   }
 
+  section[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);

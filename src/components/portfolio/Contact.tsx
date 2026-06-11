@@ -10,7 +10,7 @@ export function Contact() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="relative overflow-hidden rounded-[2rem] border border-border bg-[#0B0B0C] p-10 md:p-16 transition-all duration-300 hover:border-white/20"
+          className="relative overflow-hidden rounded-[2rem] border border-border bg-[#0B0B0C] p-5 sm:p-10 md:p-16 transition-all duration-300 hover:border-white/20"
         >
           <div className="absolute right-0 top-0 size-72 rounded-full bg-electric/5 blur-3xl pointer-events-none" />
           
@@ -19,7 +19,7 @@ export function Contact() {
               [ Let's Build ]
             </div>
             
-            <h2 className="mt-6 font-display text-4xl font-extrabold tracking-tight uppercase text-foreground sm:text-6xl">
+            <h2 className="mt-6 font-display text-[7.5vw] sm:text-5xl md:text-6xl font-extrabold tracking-tight uppercase text-foreground">
               Have a problem <br className="hidden sm:block" /> worth{" "}
               <span className="text-electric">solving?</span>
             </h2>
@@ -69,7 +69,7 @@ function ContactLink({
           >
             {label}
           </div>
-          <div className="mt-1 font-sans text-xs font-bold uppercase tracking-wider">{value}</div>
+          <div className="mt-1 font-sans text-[10px] sm:text-xs font-bold uppercase tracking-wider break-all">{value}</div>
         </div>
       </div>
       {href && <ArrowUpRight className="size-4 opacity-50 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />}

@@ -55,7 +55,7 @@ export function Achievements() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="relative overflow-hidden rounded-2xl border border-border bg-[#0B0B0C] p-8 hover:border-white/20 transition-all duration-300"
+              className="relative overflow-hidden rounded-2xl border border-border bg-[#0B0B0C] p-5 sm:p-8 hover:border-white/20 transition-all duration-300"
             >
               <div className="font-display text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl">
                 <Counter target={s.value} suffix={s.suffix} />

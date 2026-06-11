@@ -50,12 +50,12 @@ export function Hero() {
           className="relative w-full overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] border border-border bg-[#0B0B0C] p-6 sm:p-8 md:p-12 lg:p-16 shadow-elevated flex flex-col justify-between min-h-[500px] lg:min-h-[640px]"
         >
           {/* Header Metadata */}
-          <div className="flex justify-between items-start w-full border-b border-border/30 pb-6 mb-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 w-full border-b border-border/30 pb-6 mb-8 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground">
             <div className="flex flex-col gap-1">
               <span className="text-electric">[ Portfolio]</span>
               <span>© 2026</span>
             </div>
-            <div className="text-right">
+            <div className="text-left sm:text-right">
               <span>Developer — Andhra Pradesh, IN</span>
             </div>
           </div>
@@ -109,16 +109,27 @@ export function Hero() {
                 <span className="size-2 rounded-full bg-white/5" />
                 <span className="ml-3 font-mono text-[10px] sm:text-[10.5px] font-bold uppercase tracking-wider text-muted-foreground">about.ts</span>
               </div>
-              <pre className="whitespace-pre-wrap break-words p-6 font-mono text-[11.5px] sm:text-[12.5px] xl:text-[13px] leading-relaxed text-foreground/75 max-h-[400px] overflow-y-auto">
-                <motion.div variants={containerVariants} initial="hidden" animate="visible">
+              {/* Desktop layout: line-by-line editor with line numbers */}
+              <pre className="hidden sm:block whitespace-pre-wrap break-words p-6 font-mono text-[12.5px] xl:text-[13px] font-medium leading-relaxed text-foreground max-h-[400px] overflow-y-auto">
+                <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-1">
                   {codeLines.map((l, i) => (
-                    <motion.div key={i} variants={lineVariants} className={l.c}>
-                      <span className="mr-6 inline-block w-5 select-none text-right text-muted-foreground/25 font-bold">
+                    <motion.div key={i} variants={lineVariants} className={`flex items-start ${l.c || ""}`}>
+                      <span className="mr-6 inline-block w-5 select-none text-right text-muted-foreground/25 font-bold shrink-0">
                         {i + 1}
                       </span>
-                      {l.t || "\u00A0"}
+                      <span className="flex-1 min-w-0">{l.t || "\u00A0"}</span>
                     </motion.div>
                   ))}
+                </motion.div>
+              </pre>
+
+              {/* Mobile layout: clean continuous paragraph matching IDE comment style */}
+              <pre className="sm:hidden whitespace-pre-wrap break-words p-5 font-mono text-[11px] font-medium leading-relaxed text-foreground max-h-none overflow-y-visible">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+                  <div className="text-muted-foreground mb-3">// about.ts</div>
+                  <p className="text-justify leading-relaxed text-[#E5E5E7]/90 font-mono hyphens-auto text-[10px] sm:text-[11.5px]">
+                    Full Stack Developer who turns ideas into real, working products end-to-end. I approach problems by understanding the whole system, breaking them down, and delivering solutions that actually work in real-world conditions. I focus on ownership, clarity, and execution, so what gets built is reliable, usable, and ready to scale. I work hands-on with data, structuring it, validating it, and using it to drive accurate results and meaningful outputs. I also ensure that applications are properly built, tested, and released, with smooth deployment and stable performance, so systems run consistently as they grow.
+                  </p>
                 </motion.div>
               </pre>
             </motion.div>

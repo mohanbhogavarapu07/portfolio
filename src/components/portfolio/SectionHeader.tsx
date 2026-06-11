@@ -20,7 +20,10 @@ export function SectionHeader({
       transition={{ duration: 0.7 }}
       className={alignClass}
     >
-      <h2 className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-6xl uppercase">
+      <span className="font-mono text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.3em] text-electric mb-3.5 block">
+        [ {eyebrow} ]
+      </span>
+      <h2 className="font-display text-[clamp(1.2rem,6.5vw,2.5rem)] sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight text-foreground uppercase break-words">
         {title}
       </h2>
       {subtitle && (

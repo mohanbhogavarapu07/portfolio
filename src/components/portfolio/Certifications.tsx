@@ -222,13 +222,26 @@ function CertCard({ type, title, issuer, year, file }: { type: string; title: st
       <div className="flex flex-col gap-4">
         <div className="aspect-[4/3] overflow-hidden rounded-xl bg-gradient-to-br from-[#121213] to-[#1a1a1c] border border-border/60 relative shrink-0">
           {isPdf ? (
-            <div className="w-[109%] h-full overflow-hidden">
-              <iframe
-                src={`${file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
-                className="w-full h-full border-0 pointer-events-none select-none overflow-hidden bg-[#121213]"
-                scrolling="no"
-              />
-            </div>
+            <>
+              {/* Desktop PDF iframe */}
+              <div className="hidden sm:block w-[109%] h-full overflow-hidden">
+                <iframe
+                  src={`${file}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`}
+                  className="w-full h-full border-0 pointer-events-none select-none overflow-hidden bg-[#121213]"
+                  scrolling="no"
+                />
+              </div>
+              {/* Mobile PDF Fallback Card */}
+              <div className="sm:hidden flex flex-col items-center justify-center w-full h-full p-4 bg-gradient-to-br from-[#121213] to-[#1e1e22]">
+                <FileText className="size-10 text-electric/80 mb-2 animate-pulse" />
+                <span className="font-mono text-[9px] font-bold text-muted-foreground uppercase tracking-widest text-center px-2 line-clamp-1">
+                  {file.split('/').pop()?.replace(/%20/g, ' ')}
+                </span>
+                <span className="mt-3 inline-flex items-center justify-center rounded-lg border border-electric/30 bg-electric/10 px-3 py-1 font-sans text-[9px] font-bold uppercase tracking-wider text-electric hover:bg-electric/20 transition-all">
+                  Open PDF
+                </span>
+              </div>
+            </>
           ) : (
             <img
               src={file}

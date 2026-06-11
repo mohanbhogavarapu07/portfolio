@@ -56,7 +56,7 @@ export function Experience() {
 
         <div className="relative mt-24 w-full max-w-6xl mx-auto">
           {/* Vertical timeline line (desktop shifted, mobile left) */}
-          <div className="absolute left-[15px] md:left-[120px] top-0 h-full w-px bg-border/80" />
+          <div className="absolute left-[0px] sm:left-[15px] md:left-[120px] top-0 h-full w-px bg-border/80" />
           
           <div className="space-y-12">
             {roles.map((r, i) => (
@@ -78,7 +78,7 @@ function RoleCard({ r, i }: { r: typeof roles[0]; i: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5, delay: i * 0.05 }}
-      className="relative pl-12 md:pl-[160px]"
+      className="relative pl-6 sm:pl-12 md:pl-[160px]"
     >
       {/* Year tag on the left (desktop only) */}
       <div className="absolute left-0 top-[26px] hidden md:flex w-[100px] flex-col items-end text-right">
@@ -91,11 +91,11 @@ function RoleCard({ r, i }: { r: typeof roles[0]; i: number }) {
       </div>
 
       {/* Timeline visual marker (desktop shifted, mobile left) */}
-      <div className="absolute left-[12px] md:left-[117px] top-[28px] size-[7px] rounded-full bg-electric ring-[6px] ring-background" />
+      <div className="absolute left-[-3px] sm:left-[12px] md:left-[117px] top-[28px] size-[7px] rounded-full bg-electric ring-[6px] ring-background" />
       
       <div
         onClick={() => setOpen(!open)}
-        className="group relative overflow-hidden rounded-2xl border border-border bg-[#0B0B0C] p-8 transition-all duration-300 hover:border-white/20 cursor-pointer select-none"
+        className="group relative overflow-hidden rounded-2xl border border-border bg-[#0B0B0C] p-6 sm:p-8 transition-all duration-300 hover:border-white/20 cursor-pointer select-none"
       >
         {/* Dynamic Chevron Indicator in top-right */}
         <ChevronDown
@@ -118,7 +118,7 @@ function RoleCard({ r, i }: { r: typeof roles[0]; i: number }) {
               <span>{r.location}</span>
             </div>
             
-            <h3 className="mt-3 font-display text-2xl font-bold text-foreground uppercase tracking-wide">
+            <h3 className="mt-3 font-display text-[clamp(1.1rem,5vw,1.5rem)] sm:text-2xl font-bold text-foreground uppercase tracking-wide break-words">
               {r.company}
             </h3>
             <div className="mt-1 font-sans text-xs font-semibold text-electric uppercase tracking-wider">{r.role}</div>
@@ -136,7 +136,7 @@ function RoleCard({ r, i }: { r: typeof roles[0]; i: number }) {
             {r.bullets.map((b) => (
               <li key={b} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground font-sans font-medium">
                 <span className="mt-[7px] size-[4px] shrink-0 rounded-full bg-electric/60" />
-                <span>{b}</span>
+                <span className="text-justify hyphens-auto">{b}</span>
               </li>
             ))}
           </ul>
